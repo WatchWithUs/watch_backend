@@ -2,6 +2,9 @@
 // https://www.npmjs.com/package/dotenv
 require("dotenv").config();
 
+//const express = require('express');
+const mongoose = require("mongoose");
+
 // ℹ️ Connects to the database
 require("./db");
 
@@ -26,7 +29,7 @@ require("./error-handling")(app);
 
 // Connect to DB
 mongoose
-    .connect("mongodb://127.0.0.1:27017/project-management-server")
+    .connect("mongodb://127.0.0.1:27017/watch_backend")
     .then((response) => {
         console.log(`Connected! Database Name: "${response.connections[0].name}"`);
     })
