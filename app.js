@@ -24,8 +24,9 @@ app.use("/api", indexRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 //movie routes
-const moviesRouter = require("./routes/movies.routes");
-app.use('/api', moviesRouter);
+const moviesRoutes = require("./routes/movie.routes");
+//app.use('/api', moviesRouter);
+app.use('/', moviesRoutes);//just commented /movies to / : 6/3 11h56
 
 //const userRoutes = require("./routes/user.routes");
 //app.use("/user", userRoutes);

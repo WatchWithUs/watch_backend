@@ -11,9 +11,9 @@ const fileUploader = require("../config/cloudinary.config");
  
 // GET "/api/movies" => Route to list all available movies
 router.get("/movies", (req, res, next) => {
-  Movie.find()
+  Movie.find({})
     .then(moviesFromDB => res.status(200).json(moviesFromDB))
-    .catch(err => next(err));
+    .catch(err => {next(err)});
 });
  
 // POST "/api/upload" => Route that receives the image, sends it to Cloudinary via the fileUploader and returns the image URL

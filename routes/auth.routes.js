@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
+//const Movie = require("../models/Movie.model");//added 6 march
 //const Film = require("../models/Film.model");
 
 // Require necessary (isAuthenticated) middleware in order to control access to specific routes
