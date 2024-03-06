@@ -25,9 +25,10 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 //movie routes
 const moviesRoutes = require("./routes/movie.routes");
+const collectionRoutes = require("./routes/collection.routes");
 //app.use('/api', moviesRouter);
 app.use('/', moviesRoutes);//just commented /movies to / : 6/3 11h56
-
+app.use("/", collectionRoutes);
 //const userRoutes = require("./routes/user.routes");
 //app.use("/user", userRoutes);
 

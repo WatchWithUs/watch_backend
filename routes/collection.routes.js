@@ -15,7 +15,7 @@ router.post("/collection", (req, res, next) => {
     .catch((err) => {
       console.log("Error in creating a new collection: ");
       console.error(err);
-      res.status(500).json({ message: "Error creating a new project" });
+      res.status(500).json({ message: "Error creating a new collection" });
     });
 });
 
@@ -36,7 +36,7 @@ router.get("/collection", (req, res, next) => {
 
 
 // DELETE /collection/:collectionId
-router.delete("/collection/:collectionId", isAuthenticated, (req, res, next) => {
+router.delete("/collection/:collectionId",  (req, res, next) => {
     const { collectionId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(collectionId)) {
         res.status(400).json({ message: 'Specified id is not valid' });
@@ -53,5 +53,10 @@ router.delete("/collection/:collectionId", isAuthenticated, (req, res, next) => 
             res.status(500).json({ message: "Error deleting collection" });
         });
 });
+
+
+
+
+module.exports = router;
 
 
