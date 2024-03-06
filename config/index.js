@@ -16,15 +16,18 @@ const cors = require("cors");
 const FRONTEND_URL = process.env.ORIGIN || "http://localhost:3000";
 
 // Middleware configuration
-module.exports = (app) => {
-  // Because this will be hosted on a server that will accept requests from outside and it will be hosted ona server with a `proxy`, express needs to know that it should trust that setting.
-  // Services like Fly use something called a proxy and you need to add this to your server
-  app.set("trust proxy", 1);
-
+module.exports = app => {
+  // When deployed, our backend will not receive requests directly, but from a proxy
+  // server which receives all the requests and then forwards them to our server. 
+  // Hosting services like Heroku use a proxy.
+  // We set the following option to allow requests coming from a proxy server.
+  app.set('trust proxy', 1);
+ 
   // controls a very specific header to pass headers from the frontend
   app.use(
     cors({
-      origin: [FRONTEND_URL],
+      credentials: true,
+      origin: process.env.ORIGIN || 'http://localhost:5173'
     })
   );
 

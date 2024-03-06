@@ -12,7 +12,7 @@ const collectionSchema = new Schema({
       },
       tasks: [{
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Film'
+        ref: 'Movie'
       }]
     });
 

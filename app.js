@@ -23,6 +23,9 @@ app.use("/api", indexRoutes);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
+//movie routes
+const moviesRouter = require("./routes/movies.routes");
+app.use('/api', moviesRouter);
 
 //const userRoutes = require("./routes/user.routes");
 //app.use("/user", userRoutes);
