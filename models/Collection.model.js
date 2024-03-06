@@ -10,7 +10,7 @@ const collectionSchema = new Schema({
         type: String,
         required: true
       },
-      tasks: [{
+      movies: [{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Movie'
       }]
