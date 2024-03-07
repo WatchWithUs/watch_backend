@@ -5,15 +5,20 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const cors = require("cors");
 
 // ℹ️ Connects to the database
 require("./db");
 
-// Handles http requests (express is node js framework)
-// https://www.npmjs.com/package/express
-
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
+
+// Set up CORS handling
+app.use(cors({
+    origin: "http://localhost:5173", // Update with the origin of your client application
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  }));
 
 // 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes");
