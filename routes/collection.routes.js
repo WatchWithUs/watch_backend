@@ -33,30 +33,25 @@ router.get("/collection", (req, res, next) => {
     });
 });
 
-
-
 // DELETE /collection/:collectionId
-router.delete("/collection/:collectionId",  (req, res, next) => {
-    const { collectionId } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(collectionId)) {
-        res.status(400).json({ message: 'Specified id is not valid' });
-        return;
-    }
+router.delete("/collection/:collectionId", (req, res, next) => {
+  const { collectionId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(collectionId)) {
+    res.status(400).json({ message: "Specified id is not valid" });
+    return;
+  }
 
-    Collection.findByIdAndDelete(collectionId)
-        .then(() => {
-            res.json({ message: `collection with ID ${collectionId} is removed successfully.` });
-        })
-        .catch((e) => {
-            console.log("Error deleting collection");
-            console.error(e);
-            res.status(500).json({ message: "Error deleting collection" });
-        });
+  Collection.findByIdAndDelete(collectionId)
+    .then(() => {
+      res.json({
+        message: `collection with ID ${collectionId} is removed successfully.`,
+      });
+    })
+    .catch((e) => {
+      console.log("Error deleting collection");
+      console.error(e);
+      res.status(500).json({ message: "Error deleting collection" });
+    });
 });
 
-
-
-
 module.exports = router;
-
-
