@@ -2,17 +2,15 @@
 // https://www.npmjs.com/package/dotenv
 require("dotenv").config();
 
-//const express = require('express');
+const express = require("express");
 const mongoose = require("mongoose");
+const app = express();
 
 // ℹ️ Connects to the database
 require("./db");
 
 // Handles http requests (express is node js framework)
 // https://www.npmjs.com/package/express
-const express = require("express");
-
-const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
@@ -23,24 +21,24 @@ app.use("/api", indexRoutes);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
-//movie routes
+
 const moviesRoutes = require("./routes/movie.routes");
 const collectionRoutes = require("./routes/collection.routes");
-//app.use('/api', moviesRouter);
-app.use('/', moviesRoutes);//just commented /movies to / : 6/3 11h56
+const userRoutes = require("./routes/user.routes");
+
+app.use("/", moviesRoutes);
 app.use("/", collectionRoutes);
-//const userRoutes = require("./routes/user.routes");
-//app.use("/user", userRoutes);
+app.use("/", userRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
 // Connect to DB
 mongoose
-    .connect("mongodb://127.0.0.1:27017/watch_backend")
-    .then((response) => {
-        console.log(`Connected! Database Name: "${response.connections[0].name}"`);
-    })
-    .catch((err) => console.error("Error connecting to Mongo", err));
+  .connect("mongodb://127.0.0.1:27017/watch_backend")
+  .then((response) => {
+    console.log(`Connected! Database Name: "${response.connections[0].name}"`);
+  })
+  .catch((err) => console.error("Error connecting to Mongo", err));
 
 module.exports = app;
