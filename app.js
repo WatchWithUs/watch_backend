@@ -31,7 +31,8 @@ const moviesRoutes = require("./routes/movie.routes");
 const collectionRoutes = require("./routes/collection.routes");
 const userRoutes = require("./routes/user.routes");
 
-app.use("/", moviesRoutes);
+//app.use("/", moviesRoutes);
+app.use("/api/movies", moviesRoutes);
 app.use("/", collectionRoutes);
 app.use("/", userRoutes);
 

@@ -20,7 +20,8 @@ router.get("/search", async (req, res, next) => {
 });
 
 // GET "/api/movies" => Route to list all available movies
-router.get("/movies", (req, res, next) => {
+//router.get("/movies", (req, res, next) => {
+router.get("/", (req, res, next) => {
   Movie.find({})
     .then((moviesFromDB) => res.status(200).json(moviesFromDB))
     .catch((err) => {
@@ -28,7 +29,8 @@ router.get("/movies", (req, res, next) => {
     });
 });
 
-router.post("/movies", (req, res, next) => {
+//router.post("/movies", (req, res, next) => {
+  router.post("/", (req, res, next) => {
   Movie.create(req.body)
     .then((createdMovie) => {
       res.status(200).json(createdMovie);
