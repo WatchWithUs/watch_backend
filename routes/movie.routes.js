@@ -2,8 +2,21 @@
 const router = require('express').Router();
 const Movie = require("../models/Movie.model");
 const Collection = require("../models/Collection.model");
-
 const {isAuthenticated} = require("../middleware/jwt.middleware");
+
+// GET "/api/movies/search?q=query" => Route to search movies by title
+router.get("/search", async (req, res, next) => {
+  try {
+    const searchTerm = req.query.q; 
+
+    const movies = await Movie.find({ title: { $regex: searchTerm, $options: 'i' } }); // Use regex para fazer a pesquisa insensível a maiúsculas e minúsculas
+
+    res.json({ movies });
+  } catch (error) {
+    console.error('Erro ao pesquisar filmes:', error);
+    res.status(500).json({ message: 'Erro interno do servidor' });
+  }
+});
 
 
 // GET "/api/movies" => Route to list all available movies
