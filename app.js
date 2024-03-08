@@ -13,12 +13,8 @@ require("./db");
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
 
-// Set up CORS handling
-app.use(cors({
-    origin: "http://localhost:5173", // Update with the origin of your client application
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-  }));
+
+
 
 // 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes");
@@ -40,11 +36,11 @@ app.use("/", userRoutes);
 require("./error-handling")(app);
 
 // Connect to DB
-mongoose
-  .connect("mongodb://127.0.0.1:27017/watch_backend")
-  .then((response) => {
-    console.log(`Connected! Database Name: "${response.connections[0].name}"`);
-  })
-  .catch((err) => console.error("Error connecting to Mongo", err));
+// mongoose
+//   .connect("mongodb://127.0.0.1:27017/watch_backend")
+//   .then((response) => {
+//     console.log(`Connected! Database Name: "${response.connections[0].name}"`);
+//   })
+//   .catch((err) => console.error("Error connecting to Mongo", err));
 
 module.exports = app;
