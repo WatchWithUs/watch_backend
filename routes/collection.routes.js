@@ -38,6 +38,30 @@ router.get("/collection", (req, res, next) => {
     });
 });
 
+// GET /collection/:collectionId
+router.get("/collection/:collectionId", (req, res, next) => {
+  const { collectionId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(collectionId)) {
+    res.status(400).json({ message: "Specified id is not valid" });
+    return;
+  }
+
+  Collection.findById(collectionId)
+    .populate("movies")
+    .then((collectionFromDb) => {
+      if (!collectionFromDb) {
+        res.status(404).json({ message: "Collection not found" });
+        return;
+      }
+      res.json(collectionFromDb);
+    })
+    .catch((err) => {
+      console.log("Error getting collection by id");
+      console.error(err);
+      res.status(500).json({ message: "Error getting collection by id" });
+    });
+});
+
 // DELETE /collection/:collectionId
 router.delete("/collection/:collectionId", (req, res, next) => {
   const { collectionId } = req.params;
