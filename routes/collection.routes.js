@@ -5,21 +5,26 @@ const Collection = require("../models/Collection.model");
 //User Auth
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
-//Post /collection
-router.post("/collection", (req, res, next) => {
-  const { title, description } = req.body;
-  Collection.create({ title, description })
-    .then((collectionFromDb) => {
-      res.status(201).json(collectionFromDb);
-    })
-    .catch((err) => {
-      console.log("Error in creating a new collection: ");
-      console.error(err);
-      res.status(500).json({ message: "Error creating a new collection" });
-    });
+// POST /collection
+router.post("/collection", async (req, res, next) => {
+  const { title, description, selectedMovies } = req.body;
+
+  try {
+    const newCollection = await Collection.create({ title, description });
+
+    if (selectedMovies && selectedMovies.length > 0) {
+      newCollection.movies = selectedMovies;
+      await newCollection.save();
+    }
+
+    res.status(201).json(newCollection);
+  } catch (error) {
+    console.error("Error creating a new collection:", error);
+    res.status(500).json({ message: "Error creating a new collection" });
+  }
 });
 
-// GET /colection
+// GET /collection
 router.get("/collection", (req, res, next) => {
   Collection.find()
     .populate("movies")
@@ -44,7 +49,7 @@ router.delete("/collection/:collectionId", (req, res, next) => {
   Collection.findByIdAndDelete(collectionId)
     .then(() => {
       res.json({
-        message: `collection with ID ${collectionId} is removed successfully.`,
+        message: `Collection with ID ${collectionId} is removed successfully.`,
       });
     })
     .catch((e) => {
