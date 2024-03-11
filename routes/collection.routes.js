@@ -62,6 +62,37 @@ router.get("/collection/:collectionId", (req, res, next) => {
     });
 });
 
+// PUT /collection/:collectionId
+router.put("/collection/:collectionId", async (req, res, next) => {
+  const { collectionId } = req.params;
+  const { title, description, selectedMovies } = req.body;
+
+  try {
+    // Verifica se o ID da coleção é válido
+    if (!mongoose.Types.ObjectId.isValid(collectionId)) {
+      res.status(400).json({ message: "Specified id is not valid" });
+      return;
+    }
+
+    // Encontra a coleção pelo ID e atualiza os campos especificados
+    const updatedCollection = await Collection.findByIdAndUpdate(
+      collectionId,
+      { title, description, movies: selectedMovies },
+      { new: true } // Retorna a coleção atualizada
+    );
+
+    if (!updatedCollection) {
+      res.status(404).json({ message: "Collection not found" });
+      return;
+    }
+
+    res.json(updatedCollection);
+  } catch (error) {
+    console.error("Error updating collection:", error);
+    res.status(500).json({ message: "Error updating collection" });
+  }
+});
+
 // DELETE /collection/:collectionId
 router.delete("/collection/:collectionId", (req, res, next) => {
   const { collectionId } = req.params;
