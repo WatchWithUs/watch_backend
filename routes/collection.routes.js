@@ -68,17 +68,15 @@ router.put("/collection/:collectionId", async (req, res, next) => {
   const { title, description, selectedMovies } = req.body;
 
   try {
-    // Verifica se o ID da coleção é válido
     if (!mongoose.Types.ObjectId.isValid(collectionId)) {
       res.status(400).json({ message: "Specified id is not valid" });
       return;
     }
 
-    // Encontra a coleção pelo ID e atualiza os campos especificados
     const updatedCollection = await Collection.findByIdAndUpdate(
       collectionId,
       { title, description, movies: selectedMovies },
-      { new: true } // Retorna a coleção atualizada
+      { new: true } 
     );
 
     if (!updatedCollection) {
