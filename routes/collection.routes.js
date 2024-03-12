@@ -73,9 +73,14 @@ router.put("/collection/:collectionId", async (req, res, next) => {
       return;
     }
 
+    const updatedFields = {};
+    if (title) updatedFields.title = title;
+    if (description) updatedFields.description = description;
+    if (selectedMovies) updatedFields.movies = selectedMovies;
+
     const updatedCollection = await Collection.findByIdAndUpdate(
       collectionId,
-      { title, description, movies: selectedMovies },
+      updatedFields,
       { new: true } 
     );
 
