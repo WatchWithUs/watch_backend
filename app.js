@@ -2,6 +2,7 @@
 // https://www.npmjs.com/package/dotenv
 require("dotenv").config();
 
+const { isAuthenticated } = require("./middleware/jwt.middleware");//13/03/2024
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();

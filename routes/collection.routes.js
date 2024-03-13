@@ -6,7 +6,7 @@ const Collection = require("../models/Collection.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 // POST /collection
-router.post("/collection", async (req, res, next) => {
+router.post("/collection", isAuthenticated, async (req, res, next) => {
   const { title, description, selectedMovies } = req.body;
 
   try {
@@ -63,9 +63,15 @@ router.get("/collection/:collectionId", (req, res, next) => {
 });
 
 // PUT /collection/:collectionId
-router.put("/collection/:collectionId", async (req, res, next) => {
+router.put("/collection/:collectionId", isAuthenticated, async (req, res, next) => {
   const { collectionId } = req.params;
   const { title, description, selectedMovies } = req.body;
+
+  console.log(".....");
+  console.log(title);
+  console.log(description);
+  console.log(selectedMovies);
+  console.log(".....");
 
   try {
     if (!mongoose.Types.ObjectId.isValid(collectionId)) {
@@ -97,7 +103,7 @@ router.put("/collection/:collectionId", async (req, res, next) => {
 });
 
 // DELETE /collection/:collectionId
-router.delete("/collection/:collectionId", (req, res, next) => {
+router.delete("/collection/:collectionId", isAuthenticated, (req, res, next) => {
   const { collectionId } = req.params;
   if (!mongoose.Types.ObjectId.isValid(collectionId)) {
     res.status(400).json({ message: "Specified id is not valid" });
