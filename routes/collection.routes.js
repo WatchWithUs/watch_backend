@@ -6,7 +6,7 @@ const Collection = require("../models/Collection.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
 // POST /collection
-router.post("/collection", isAuthenticated, async (req, res, next) => {
+router.post("/collection",  async (req, res, next) => {
   const { title, description, selectedMovies } = req.body;
 
   try {
